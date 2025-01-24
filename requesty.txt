@@ -1,0 +1,26 @@
+//1. Przez identyfikator szukanego obiektu:
+
+//Request o województwa
+https://uldk.gugik.gov.pl/?request=GetVoivodeshipById&result=teryt,voivodeship
+
+//request o powiaty
+https://uldk.gugik.gov.pl/?request=GetCountyById&result=teryt,county&id=06
+
+//request o gminy
+https://uldk.gugik.gov.pl/?request=GetCommuneById&result=teryt,commune&id=0602
+
+//request o regiony
+https://uldk.gugik.gov.pl/?request=GetRegionById&result=teryt,region&id=060206_3
+
+//request o działki
+https://uldk.gugik.gov.pl/?request=GetParcelById&result=geom_wkt&id=061005_2.0001.350
+
+----------------------------------------------------------------------------------------
+
+//2. Przez pełen identyfikator działki lub nazwę obrębu i numer działki:
+
+https://uldk.gugik.gov.pl/?request=GetParcelByIdOrNr&id=0602&result=teryt
+
+----------------------------------------------------------------------------------------
+
+//3. Przez współrzędne (wyszukanie obiektu we wskazanym punkcie): 
