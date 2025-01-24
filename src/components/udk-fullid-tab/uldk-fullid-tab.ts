@@ -24,8 +24,7 @@ export class UldkIdTab extends  LitElement {
       ></vaadin-text-field>
 
       <vaadin-button
-        @click=${async (e: any) => {
-            console.log("ulkd-fullid-tab:click " + e);
+        @click=${async () => {
           if (
             this.parcelIdNode.value != null
           ) {
@@ -40,8 +39,7 @@ export class UldkIdTab extends  LitElement {
               duration:1000,
               theme:"error"
             });
-            console.log("ulkd-fullid-tab:notification " + notification);
-            
+            console.log("FULLID-TAB Notification: "+ notification);
           }
         }}
         >Szukaj działkę</vaadin-button>`

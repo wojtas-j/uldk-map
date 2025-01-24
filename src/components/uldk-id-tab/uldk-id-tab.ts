@@ -10,35 +10,25 @@ import eventBus from "../../event/eventBus";
 import { UldkApi, UldkItem } from "../../uldk-api/uldk-api";
 
 
-
 @customElement("uldk-id-tab")
 export class UldkIdTab extends LitElement {
   @property({ type: Object }) map?: L.Map;
  
   @state() uldkApi: UldkApi = new UldkApi();
-
   @query("#voivodeship")
   voivodeshipNode: any;
-
   @query("#county")
   countyNode: any;
-
   @query("#commune")
   communeNode: any;
-
   @query("#region")
   regionNode: any;
-
   @query("#parcel")
   parcelNode: any;
 
   firstUpdated(props: any) {
     super.firstUpdated(props);
-    
-    
   }
-
-  
 
   render() {
     return html`
@@ -48,8 +38,7 @@ export class UldkIdTab extends LitElement {
         clear-button-visible
         item-label-path="name"
         item-value-path="teryt"
-        .dataProvider=${async (params: any, callback: any) => {
-          console.log("uldk-id-tab:params " + params);
+        .dataProvider=${async (_params: any, callback: any) => {
           const data: UldkItem[] = await this.uldkApi.getAdministrativeNames(
             "Wojewodztwo"
           );
@@ -61,8 +50,7 @@ export class UldkIdTab extends LitElement {
             e.target.value
           );
         }}
-        @selected-item-changed=${(e: any) => {
-          console.log("uldk-id-tab:select-item-changed1 error: " + e);
+        @selected-item-changed=${() => {
           this.countyNode.value = "";
           this.countyNode.items = [];
           this.countyNode.selectedItem = undefined;
@@ -80,8 +68,7 @@ export class UldkIdTab extends LitElement {
             e.target.value
           );
         }}
-        @selected-item-changed=${(e: any) => {
-          console.log("uldk-id-tab:select-item-changed2 error: " + e);
+        @selected-item-changed=${() => {
           this.communeNode.value = "";
           this.communeNode.items = [];
           this.communeNode.selectedItem = undefined;
@@ -99,8 +86,7 @@ export class UldkIdTab extends LitElement {
             e.target.value
           );
         }}
-        @selected-item-changed=${(e: any) => {
-          console.log("uldk-id-tab:select-item-changed3 error: " + e);
+        @selected-item-changed=${() => {
           this.regionNode.value = "";
           this.regionNode.items = [];
           this.regionNode.selectedItem = undefined;
@@ -120,8 +106,7 @@ export class UldkIdTab extends LitElement {
       ></vaadin-text-field>
 
       <vaadin-button
-        @click=${async (e: any) => {
-          console.log("uldk-id-tab:click error: " + e);
+        @click=${async () => {
           if (
             this.voivodeshipNode.value !== "" &&
             this.countyNode.value !== "" &&
@@ -140,8 +125,7 @@ export class UldkIdTab extends LitElement {
               duration:1000,
               theme:"error"
             });
-            console.log("uldk-id-tab:notification " + notification);
-            
+            console.log("ID-TABS Notification" + notification);
           }
         }}
         >Szukaj działkę</vaadin-button

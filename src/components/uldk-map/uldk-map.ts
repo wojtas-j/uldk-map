@@ -34,18 +34,15 @@ export class UldkMap extends i18nMixin(LitElement) {
     });
 
     eventBus.on("search-by-fullid", (e: any) => {
-      console.log(e);
       this.geojsonLayer.clearLayers();
       this.geojsonLayer.addData(e.geojson);
       this.map?.fitBounds(this.geojsonLayer.getBounds(), { duration: 2 });
     });
 
-    eventBus.on("disable-map-click", (e: any) => {
-      console.log("uldk-map:disable-map-click error: " + e);
+    eventBus.on("disable-map-click", () => {
       this.map?.removeEventListener("click");
     });
-    eventBus.on("enable-map-click", (e: any) => {
-      console.log("uldk-map:enable-map-click error: " + e);
+    eventBus.on("enable-map-click", () => {
       this.map?.on("click", async (e: L.LeafletMouseEvent) => {
        
         const wkt = await  this.uldkApi.getParcelByXY(`${e.latlng.lng},${e.latlng.lat}`)
