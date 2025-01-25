@@ -7,27 +7,42 @@ import L from "leaflet";
 import { LitElement, css, html } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import eventBus from "../../event/eventBus";
-import { UldkApi, UldkItem } from "../../uldk-api/uldk-api";
-
+import { UldkApi, ParcelData, UldkItem } from "../../uldk-api/uldk-api";
 
 @customElement("uldk-id-tab")
 export class UldkIdTab extends LitElement {
   @property({ type: Object }) map?: L.Map;
- 
+
   @state() uldkApi: UldkApi = new UldkApi();
+
   @query("#voivodeship")
-  voivodeshipNode: any;
+  voivodeshipNode!: HTMLVaadinComboBoxElement;
   @query("#county")
-  countyNode: any;
+  countyNode!: HTMLVaadinComboBoxElement;
   @query("#commune")
-  communeNode: any;
+  communeNode!: HTMLVaadinComboBoxElement;
   @query("#region")
-  regionNode: any;
+  regionNode!: HTMLVaadinComboBoxElement;
   @query("#parcel")
-  parcelNode: any;
+  parcelNode!: HTMLVaadinTextFieldElement;
 
   firstUpdated(props: any) {
     super.firstUpdated(props);
+    this.loadVoivodeships();
+  }
+
+  async loadVoivodeships() {
+    try {
+      const data: UldkItem[] = await this.uldkApi.getAdministrativeNames("Wojewodztwo");
+      this.voivodeshipNode.items = data;
+    } catch (error) {
+      console.error("Error loading voivodeships:", error);
+      Notification.show('Błąd podczas ładowania województw.', {
+        position: 'bottom-center',
+        duration: 3000,
+        theme: "error"
+      });
+    }
   }
 
   render() {
@@ -38,60 +53,90 @@ export class UldkIdTab extends LitElement {
         clear-button-visible
         item-label-path="name"
         item-value-path="teryt"
-        .dataProvider=${async (_params: any, callback: any) => {
-          const data: UldkItem[] = await this.uldkApi.getAdministrativeNames(
-            "Wojewodztwo"
-          );
-          callback(data, data.length);
-        }}
-        @change=${async (e: any) => {
-          this.countyNode.items = await this.uldkApi.getAdministrativeNames(
-            "Powiat",
-            e.target.value
-          );
-        }}
-        @selected-item-changed=${() => {
-          this.countyNode.value = "";
+        @value-changed=${async (e: CustomEvent) => {
+      const voivodeshipTeryt = e.detail.value;
+      if (voivodeshipTeryt) {
+        try {
+          const counties = await this.uldkApi.getAdministrativeNames("Powiat", voivodeshipTeryt);
+          this.countyNode.items = counties;
+        } catch (error) {
+          console.error("Error loading powiaty:", error);
+          Notification.show('Błąd podczas ładowania powiatów.', {
+            position: 'bottom-center',
+            duration: 3000,
+            theme: "error"
+          });
           this.countyNode.items = [];
-          this.countyNode.selectedItem = undefined;
-        }}
+        }
+      } else {
+        this.countyNode.items = [];
+      }
+      this.countyNode.value = "";
+      this.communeNode.items = [];
+      this.communeNode.value = "";
+      this.regionNode.items = [];
+      this.regionNode.value = "";
+    }}
       ></vaadin-combo-box>
+
       <vaadin-combo-box
         id="county"
         label="Wybierz powiat"
         clear-button-visible
         item-label-path="name"
         item-value-path="teryt"
-        @change=${async (e: any) => {
-          this.communeNode.items = await this.uldkApi.getAdministrativeNames(
-            "Gmina",
-            e.target.value
-          );
-        }}
-        @selected-item-changed=${() => {
-          this.communeNode.value = "";
+        @value-changed=${async (e: CustomEvent) => {
+      const countyTeryt = e.detail.value;
+      if (countyTeryt) {
+        try {
+          const communes = await this.uldkApi.getAdministrativeNames("Gmina", countyTeryt);
+          this.communeNode.items = communes;
+        } catch (error) {
+          console.error("Error loading gminy:", error);
+          Notification.show('Błąd podczas ładowania gmin.', {
+            position: 'bottom-center',
+            duration: 3000,
+            theme: "error"
+          });
           this.communeNode.items = [];
-          this.communeNode.selectedItem = undefined;
-        }}
+        }
+      } else {
+        this.communeNode.items = [];
+      }
+      this.communeNode.value = "";
+      this.regionNode.items = [];
+      this.regionNode.value = "";
+    }}
       ></vaadin-combo-box>
+
       <vaadin-combo-box
         id="commune"
         label="Wybierz gminę"
         clear-button-visible
         item-label-path="name"
         item-value-path="teryt"
-        @change=${async (e: any) => {
-          this.regionNode.items = await this.uldkApi.getAdministrativeNames(
-            "Region",
-            e.target.value
-          );
-        }}
-        @selected-item-changed=${() => {
-          this.regionNode.value = "";
+        @value-changed=${async (e: CustomEvent) => {
+      const communeTeryt = e.detail.value;
+      if (communeTeryt) {
+        try {
+          const regions = await this.uldkApi.getAdministrativeNames("Region", communeTeryt);
+          this.regionNode.items = regions;
+        } catch (error) {
+          console.error("Error loading regiony:", error);
+          Notification.show('Błąd podczas ładowania regionów.', {
+            position: 'bottom-center',
+            duration: 3000,
+            theme: "error"
+          });
           this.regionNode.items = [];
-          this.regionNode.selectedItem = undefined;
-        }}
+        }
+      } else {
+        this.regionNode.items = [];
+      }
+      this.regionNode.value = "";
+    }}
       ></vaadin-combo-box>
+
       <vaadin-combo-box
         id="region"
         label="Wybierz region"
@@ -99,6 +144,7 @@ export class UldkIdTab extends LitElement {
         item-value-path="teryt"
         clear-button-visible
       ></vaadin-combo-box>
+
       <vaadin-text-field
         id="parcel"
         label="Podaj nr działki"
@@ -107,38 +153,44 @@ export class UldkIdTab extends LitElement {
 
       <vaadin-button
         @click=${async () => {
-          if (
-            this.voivodeshipNode.value !== "" &&
-            this.countyNode.value !== "" &&
-            this.communeNode.value !== null &&
-            this.regionNode.value !== null &&
-            this.parcelNode.value !== ""
-          ) {
-            const teryt: string = `${this.regionNode.value}.${this.parcelNode.value}`;
-            const wkt = await this.uldkApi.getParcelById(teryt);
-            const geojson: any = wktToGeoJSON(wkt);
-            eventBus.dispatch("search-by-id", {geojson})
-           
-          } else {
-            const notification = Notification.show('Formularz musi zostać uzupełniony', {
-              position: 'bottom-center',
-              duration:1000,
-              theme:"error"
-            });
-            console.log("ID-TABS Notification" + notification);
-          }
-        }}
-        >Szukaj działkę</vaadin-button
-      >
+      const voivodeship = this.voivodeshipNode.value;
+      const county = this.countyNode.value;
+      const commune = this.communeNode.value;
+      const region = this.regionNode.value;
+      const parcel = this.parcelNode.value.trim();
+
+      if (voivodeship && county && commune && region && parcel) {
+        const teryt: string = `${region}.${parcel}`;
+        const parcelData: ParcelData | null = await this.uldkApi.getParcelById(teryt);
+        if (parcelData) {
+          const geojson: any = wktToGeoJSON(parcelData.geom_wkt);
+          eventBus.dispatch("search-by-id", { geojson, parcelData });
+        } else {
+          Notification.show('Nie znaleziono działki.', {
+            position: 'bottom-center',
+            duration: 3000,
+            theme: "error"
+          });
+        }
+      } else {
+        Notification.show('Formularz musi zostać uzupełniony', {
+          position: 'bottom-center',
+          duration: 3000,
+          theme: "error"
+        });
+      }
+    }}
+      >Szukaj działkę</vaadin-button>
     `;
   }
 
-  static styles? = css`
-    vaadin-combo-box {
+  static styles = css`
+    vaadin-combo-box, vaadin-text-field {
       width: 100%;
     }
 
-    vaadin-text-field {
+    vaadin-button {
+      margin-top: 10px;
       width: 100%;
     }
   `;
