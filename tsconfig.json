@@ -19,7 +19,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Type Definitions */
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./src"]
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }
