@@ -25,7 +25,7 @@ export class UldkPanel extends i18nMixin(LitElement) {
   render() {
     return html`
             <div class="language-selector">
-                <h4>ULDK API</h4>
+                <h4>ULDK API - Jakub Wojtaś</h4>
                 <a 
                 href="javascript:;" 
                 class="lang lang-en"
@@ -61,8 +61,12 @@ export class UldkPanel extends i18nMixin(LitElement) {
                     <vaadin-tab id="id-tab">
                         ${i18next.t("id-tab-name", "Identyfikator")}
                     </vaadin-tab>
-                    <vaadin-tab id="full-id-tab">Pełny identyfikator</vaadin-tab>
-                    <vaadin-tab id="coords-tab">Współrzędne</vaadin-tab>
+                    <vaadin-tab id="full-id-tab">
+                      ${i18next.t("full-id-tab", "Pełny identyfikator")}
+                    </vaadin-tab>
+                    <vaadin-tab id="coords-tab">
+                      ${i18next.t("coords-tab", "Współrzędne")}
+                    </vaadin-tab>
                 </vaadin-tabs>
                 <div tab="id-tab">
                     <uldk-id-tab .map=${this.map}></uldk-id-tab>
@@ -71,7 +75,7 @@ export class UldkPanel extends i18nMixin(LitElement) {
                     <uldk-fullid-tab></uldk-fullid-tab>
                 </div>
                 <div tab="coords-tab">
-                    Współrzędne
+                  ${i18next.t("coords-tab", "Współrzędne")}
                 </div>
             </vaadin-tabsheet>
             <uldk-metric-panel .parcelData=${this.parcelData}></uldk-metric-panel>

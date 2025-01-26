@@ -1,5 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { i18nMixin } from "../../i18n/i18nMixin";
+import { i18next } from "../../i18n/i18n";
 
 export interface ParcelData {
     geom_wkt: string;
@@ -13,44 +15,44 @@ export interface ParcelData {
 }
 
 @customElement("uldk-metric-panel")
-export class UldkMetricPanel extends LitElement {
+export class UldkMetricPanel extends i18nMixin(LitElement) {
     @property({ type: Object }) parcelData?: ParcelData;
 
     render() {
         if (!this.parcelData) {
-            return html`<p>Brak danych o działce.</p>`;
+            return html`<p>${i18next.t("metric-no-data", "Brak danych o działce.")}</p>`;
         }
 
         return html`
             <div class="metric-panel">
-                <h3>Metryczka Działki</h3>
+                <h3>${i18next.t("metric-panel-title", "Metryczka Działki")}</h3>
                 <table>
                     <tr>
-                        <th>Województwo</th>
+                        <th>${i18next.t("metric-voivodeship", "Województwo")}</th>
                         <td>${this.parcelData.voivodeship}</td>
                     </tr>
                     <tr>
-                        <th>Powiat</th>
+                        <th>${i18next.t("metric-county", "Powiat")}</th>
                         <td>${this.parcelData.county}</td>
                     </tr>
                     <tr>
-                        <th>Gmina</th>
+                        <th>${i18next.t("metric-commune", "Gmina")}</th>
                         <td>${this.parcelData.commune}</td>
                     </tr>
                     <tr>
-                        <th>Region</th>
+                        <th>${i18next.t("metric-region", "Region")}</th>
                         <td>${this.parcelData.region}</td>
                     </tr>
                     <tr>
-                        <th>Numer Działki</th>
+                        <th>${i18next.t("metric-parcel-number", "Numer Działki")}</th>
                         <td>${this.parcelData.parcel}</td>
                     </tr>
                     <tr>
-                        <th>Źródło Danych</th>
+                        <th>${i18next.t("metric-data-source", "Źródło Danych")}</th>
                         <td>${this.parcelData.datasource}</td>
                     </tr>
                     <tr>
-                        <th>TERYT</th>
+                        <th>${i18next.t("metric-teryt", "TERYT")}</th>
                         <td>${this.parcelData.teryt}</td>
                     </tr>
                 </table>

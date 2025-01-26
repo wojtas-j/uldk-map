@@ -1,3 +1,35 @@
 {
-    "id-tab-name": "Identyfikator"
+    "id-tab-name": "Identyfikator",
+    "full-id-tab": "Pełny identyfikator",
+    "coords-tab": "Współrzędne",
+
+    "metric-panel-title": "Metryczka Działki",
+    "metric-voivodeship": "Województwo",
+    "metric-county": "Powiat",
+    "metric-commune": "Gmina",
+    "metric-region": "Region",
+    "metric-parcel-number": "Numer Działki",
+    "metric-data-source": "Źródło Danych",
+    "metric-teryt": "TERYT",
+    "metric-no-data": "Brak danych o działce.",
+
+    "fullid-tab-label": "Identyfikator działki",
+    "fullid-tab-placeholder": "Podaj pełny identyfikator działki",
+    "fullid-tab-not-found": "Nie znaleziono działki.",
+    "fullid-tab-form-required": "Formularz musi zostać uzupełniony",
+    "fullid-tab-search-button": "Szukaj działkę",
+
+    "id-tab-error-loading-counties": "Błąd podczas ładowania powiatów.",
+    "id-tab-error-loading-communes": "Błąd podczas ładowania gmin.",
+    "id-tab-error-loading-regions": "Błąd podczas ładowania regionów.",
+    "id-tab-label-voivodeship": "Wybierz województwo",
+    "id-tab-label-county": "Wybierz powiat",
+    "id-tab-label-commune": "Wybierz gminę",
+    "id-tab-label-region": "Wybierz region",
+    "id-tab-label-parcel": "Podaj nr działki",
+    "id-tab-search-button": "Szukaj działkę",
+    "id-tab-error-parcel-not-found": "Nie znaleziono działki.",
+    "id-tab-error-form-required": "Formularz musi zostać uzupełniony",
+
+    "map-parcel-not-found": "Nie znaleziono działki w tym miejscu."
 }

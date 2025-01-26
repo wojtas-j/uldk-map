@@ -1,3 +1,35 @@
 {
-    "id-tab-name": "Identifier"
+    "id-tab-name": "Identifier",
+    "full-id-tab": "Full identifier",
+    "coords-tab": "Coordinates",
+
+    "metric-panel-title": "Parcel Metrics",
+    "metric-voivodeship": "Voivodeship",
+    "metric-county": "County",
+    "metric-commune": "Commune",
+    "metric-region": "Region",
+    "metric-parcel-number": "Parcel Number",
+    "metric-data-source": "Data Source",
+    "metric-teryt": "TERYT",
+    "metric-no-data": "No parcel data available.",
+
+    "fullid-tab-label": "Parcel Identifier",
+    "fullid-tab-placeholder": "Enter full parcel identifier",
+    "fullid-tab-not-found": "Parcel not found.",
+    "fullid-tab-form-required": "The form must be filled out",
+    "fullid-tab-search-button": "Search Parcel",
+
+    "id-tab-error-loading-counties": "Error loading counties.",
+    "id-tab-error-loading-communes": "Error loading communes.",
+    "id-tab-error-loading-regions": "Error loading regions.",
+    "id-tab-label-voivodeship": "Select Voivodeship",
+    "id-tab-label-county": "Select County",
+    "id-tab-label-commune": "Select Commune",
+    "id-tab-label-region": "Select Region",
+    "id-tab-label-parcel": "Enter Parcel Number",
+    "id-tab-search-button": "Search Parcel",
+    "id-tab-error-parcel-not-found": "Parcel not found.",
+    "id-tab-error-form-required": "The form must be filled out",
+
+    "map-parcel-not-found": "Parcel not found at this location."
 }
