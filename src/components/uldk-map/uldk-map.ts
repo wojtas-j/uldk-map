@@ -6,6 +6,7 @@ import { UldkApi, ParcelData } from "../../uldk-api/uldk-api";
 import { wktToGeoJSON } from "@terraformer/wkt";
 import { i18nMixin } from "../../i18n/i18nMixin";
 import { Notification } from '@vaadin/notification';
+import { i18next } from "../../i18n/i18n";
 
 @customElement("uldk-map")
 export class UldkMap extends i18nMixin(LitElement) {
@@ -53,7 +54,8 @@ export class UldkMap extends i18nMixin(LitElement) {
       this.displayParcel(geojson, parcelData);
       eventBus.dispatch("parcel-selected", { geojson, parcelData });
     } else {
-      Notification.show('Nie znaleziono działki w tym miejscu.', {
+      Notification.show(
+          i18next.t("map-parcel-not-found", "Nie znaleziono działki w tym miejscu."), {
         position: 'bottom-center',
         duration: 3000,
         theme: "error"
