@@ -88,7 +88,7 @@ export class UldkApi {
   }
 
   public async getParcelByXY(XY: string): Promise<ParcelData | null> {
-    const url: string = `https://uldk.gugik.gov.pl/?request=GetParcelByXY&result=geom_wkt,voivodeship,county,commune,region,parcel,datasource,teryt&xy=${XY}&srid=4326`;
+    const url: string = `https://uldk.gugik.gov.pl/?request=GetParcelByXY&xy=${XY},4326&srid=4326&result=geom_wkt,voivodeship,county,commune,region,parcel,datasource,teryt`;
     try {
       let text: string = await fetch(url).then((r) => r.text());
       text = text.trim();
